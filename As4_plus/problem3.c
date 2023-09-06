@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+int count = 0;
 int prime_check(int i, int num)
 {
     if ((num % i == 0 && i != num) || num < 2 || i < 2)
@@ -7,6 +8,9 @@ int prime_check(int i, int num)
     if (num % i == 0 && i == num)
     {
         printf("%d ", num);
+        count++;
+        if(count % 10 == 0)
+            printf("\n");
         return (0);
     }
     return (prime_check(i + 1 ,num));
