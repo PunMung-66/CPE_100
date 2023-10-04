@@ -11,7 +11,7 @@ int len(char *str)
 
 void reverse(char *dest,char *src, int i)
 {
-    if (i < 0)
+    if (i == 0)
         *dest  = '\0';
     i--;
     if (i >= 0)

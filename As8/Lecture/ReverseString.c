@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 int len(char *str)
 {
@@ -7,22 +8,25 @@ int len(char *str)
         i++;
     return (i);
 }
-void reverse(char *dest,char *src)
+
+void reverse(char *dest,char *src, int i)
 {
-    int i = len(src) - 1, j =0;
-    while (i >= 0)
+    if (i == 0)
+        *dest  = '\0';
+    i--;
+    if (i >= 0)
     {
-        dest[j] = src[i];
-        j++;
-        i--;
+        *dest = src[i];
+        dest++;
+        reverse(dest, src, i);
     }
-    dest[j]  = '\0';
-    printf("%s", dest);
 }
 
 int main()
 {
-    char *str, *str2;
+    char str[90], str2[90];
     scanf("%s", str);
-    reverse(str2, str);
+    reverse(str2, str, len(str));
+    printf("%s" , str2);
+    return(0);
 }
