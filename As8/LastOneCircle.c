@@ -1,26 +1,38 @@
 #include <stdio.h>
 
-void intcopy(int *arr, int *arr1, int n)
+// int circle_out(int *arr, int count, int i, int num)
+// {
+//     while (count)
+//     {
+//         if (i >= num)
+//         {
+//             i -= num;
+//         }
+//         if(arr[i] != 0)
+//             count--;
+//         i++;
+//     }
+//     arr[i - 1] = 0;
+//     return (i);
+// }
+
+int circle_out2(int *arr, int count, int i, int num)
 {
-    while (n--)
-        arr[n] = arr1[n];
+    if (count == 0)
+    {
+        arr[i - 1] = 0;
+        return (i);
+    }
+    if (i >= num)
+    {
+        i -= num;
+    }
+    if(arr[i] != 0)
+        count--;
+    i++;
+    return (circle_out2(arr, count, i, num));
 }
 
-int circle_out(int *arr, int count, int i, int num)
-{
-    while (count)
-    {
-        if (i >= num)
-        {
-            i -= num;
-        }
-        if(arr[i] != 0)
-            count--;
-        i++;
-    }
-    arr[i - 1] = 0;
-    return (i);
-}
 int main()
 {
     int n, m, count, a = 0;
@@ -39,7 +51,7 @@ int main()
         arr[i] = j;
     while (n > 1)
     {
-        a = circle_out(arr,count, a, m);
+        a = circle_out2(arr,count, a, m);
         n--;
     }
     for (int i = 0; i < m; i++)
