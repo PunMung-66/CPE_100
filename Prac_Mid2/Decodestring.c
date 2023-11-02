@@ -1,3 +1,4 @@
+//Punnawat Mungkalarungsi 66070503436
 #include <stdio.h>
 
 void decode(char * str)

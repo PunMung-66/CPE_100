@@ -1,4 +1,4 @@
-//ok
+//Punnawat Mungkalarungsi 66070503436
 #include <stdio.h>
 
 int main()
