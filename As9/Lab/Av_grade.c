@@ -24,8 +24,8 @@ int main() {
 
     char first[1], line[1024], *token, term[30];
     int index = 0, col = 0, count = 0;
-    double each_grade = 0, each_credit = 0, ms_grade = 0, ms_credit = 0, e_grade = 0, e_credit = 0;
-    double C_all = 0, G_all = 0;
+    double each_grade = 0, each_credit = 0, m_grade = 0, m_credit = 0, e_grade = 0, e_credit = 0, s_grade = 0, s_credit = 0;
+    double C_all = 0, G_all = 0, M_all = 0, S_all = 0, E_all = 0;
     //print head
     fgets(line, sizeof(line), file);
     token = strtok(line, ",");
@@ -86,7 +86,7 @@ int main() {
         puts("File could not open");
     else
     {
-        fprintf(cfPtr, "Term, Grade, MSGrade, EGrade\n");
+        fprintf(cfPtr, "Term, Grade, Math Grade, Science Grade, English Grade\n");
 
         strcpy(term, sub[0].term);
         for (int i = 0; i <= index; i++)
@@ -95,15 +95,20 @@ int main() {
             {
                 G_all += each_grade;
                 C_all += each_credit;
-                ms_grade = ms_grade/ ms_credit;
+                m_grade = m_grade/ m_credit;
+                s_grade = s_grade/ s_credit;
                 e_grade = e_grade/ e_credit;
                 each_grade = each_grade/ each_credit;
-                fprintf(cfPtr, "%s,%.2lf,%.2lf,%.2lf\n", term, each_grade, ms_grade, e_grade);
+                fprintf(cfPtr, "%s,%.2lf,%.2lf,%.2lf,%.2lf\n", term, each_grade, m_grade, s_grade, e_grade);
                 // printf("%s I got grade: %.2lf\n", term, each_grade);
                 // printf("%s your Sience and Math are %.2lf\n", term, ms_grade);
                 // printf("%s your English are %.2lf\n\n", term, e_grade);
                 strcpy(term, sub[i].term);
-                ms_grade = 0, ms_credit = 0, e_grade = 0, e_credit = 0, each_credit = 0, each_grade = 0;
+                M_all += m_grade;
+                S_all += s_grade;
+                E_all += e_grade;
+                s_grade = 0, s_credit = 0, e_grade = 0, e_credit = 0, each_credit = 0, each_grade = 0;
+                m_grade = 0, m_credit = 0;
                 count++;
             }
 
@@ -116,14 +121,24 @@ int main() {
                 e_grade += (sub[i].credit * sub[i].grade);
             }
 
-            if (strstr(sub[i].code,"M") != NULL || strstr(sub[i].code,"SI") != NULL)
+            if ( strstr(sub[i].code,"SI") != NULL)
             {
-                ms_credit += sub[i].credit;
-                ms_grade += (sub[i].credit * sub[i].grade);
+                s_credit += sub[i].credit;
+                s_grade += (sub[i].credit * sub[i].grade);
+            }
+
+            if (strstr(sub[i].code,"M") != NULL)
+            {
+                m_credit += sub[i].credit;
+                m_grade += (sub[i].credit * sub[i].grade);
             }
         }
         G_all = G_all/ C_all;
-        fprintf(cfPtr, "Average grade, %d ,term is:, %.3lf", count, G_all);
+
+        fprintf(cfPtr, "Average grade, %d ,term is:, %.3lf\n", count, G_all);
+        fprintf(cfPtr, "Average Math grade, %d ,term is:, %.3lf\n", count, (M_all/count));
+        fprintf(cfPtr, "Average Science grade, %d ,term is:, %.3lf\n", count, (S_all/count));
+        fprintf(cfPtr, "Average English grade, %d ,term is:, %.3lf\n", count, (E_all/count));
         // ms_grade = ms_grade/ ms_credit;
         // e_grade = e_grade/ e_credit;
         // each_grade = each_grade/ each_credit;
